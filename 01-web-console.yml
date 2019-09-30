@@ -1,6 +1,6 @@
 ---
 - name: Install the web console (Cockpit) on a system
-  hosts: webconsole
+  hosts: cockpit
   tasks:
     - name: Install the cockpit packages
       yum:
@@ -18,5 +18,3 @@
       service:
         name: cockpit.socket
         state: started
-
-        
