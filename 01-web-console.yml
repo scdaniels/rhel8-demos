@@ -1,0 +1,22 @@
+---
+- name: Install the web console (Cockpit) on a system
+  hosts: rhel8-webconsole
+  tasks:
+    - name: Install the cockpit packages
+      yum:
+        name: cockpit
+        state: latest
+
+    - name: Open the cockpit service/port (tcp/9090) through the firewall
+      firewalld:
+        service: cockpit
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Start the service/socket
+      service:
+        name: cockpit.socket
+        state: enabled
+
+        
