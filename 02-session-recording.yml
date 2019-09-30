@@ -1,0 +1,40 @@
+---
+- name: Enable session recording with tlog
+  hosts: cockpit
+
+  handlers:
+    - name: restart sssd
+      service:
+          name: sssd
+          state: restarted
+
+  tasks:
+    - name: Install the session recording packages
+      yum:
+        name:
+          - tlog
+          - cockpit-session-recording
+        state: latest
+
+    - name: Create the /etc/sssd directory if it does not exist
+      file:
+        path: /etc/sssd
+        state: directory
+        mode: 0700
+        owner: sssd
+        group: sssd
+
+    - name: Install updated /etc/sssd.conf
+      template:
+        src: files/sssd.conf.j2
+        dest: /etc/sssd/sssd.conf
+        mode: 0600
+        owner: root
+        group: root
+      notify: restart sssd
+
+    - name: Enable the cockpit service it is is not already started
+      service:
+        name: cockpit.socket
+        enabled: true
+        state: started
