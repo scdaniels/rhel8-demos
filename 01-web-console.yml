@@ -1,6 +1,6 @@
 ---
 - name: Install the web console (Cockpit) on a system
-  hosts: rhel8-webconsole
+  hosts: webconsole
   tasks:
     - name: Install the cockpit packages
       yum:
