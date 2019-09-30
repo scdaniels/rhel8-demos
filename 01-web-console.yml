@@ -17,4 +17,5 @@
     - name: Start the service/socket
       service:
         name: cockpit.socket
+        enabled: true
         state: started
