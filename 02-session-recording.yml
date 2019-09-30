@@ -29,8 +29,8 @@
         src: files/sssd.conf.j2
         dest: /etc/sssd/sssd.conf
         mode: 0600
-        owner: root
-        group: root
+        owner: sssd
+        group: sssd
       notify: restart sssd
 
     - name: Enable the cockpit service it is is not already started
