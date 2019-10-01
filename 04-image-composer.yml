@@ -1,0 +1,29 @@
+---
+- name: Install the Image Composer plugin on the cockpit server
+  hosts: cockpit
+  tasks:
+    - name: Install required Composer packages
+      yum:
+        name:
+          - lorax-composer
+          - composer-cli
+          - cockpit-composer
+          - bash-completion
+        state: latest
+    
+    - name: Enable composer services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - lorax-composer.socket
+        - cockpit.socket
+
+    - name: Firewall settings
+      firewalld:
+        service: cockpit
+        permanent: true
+        immediate: true
+        state: enabled
+
